@@ -67,4 +67,4 @@ while True:
     elif whoFirst == "P":
         userPlayFirst()
     else:
-        print("please input a valid choice")
+        print("please input a valid choice!")
