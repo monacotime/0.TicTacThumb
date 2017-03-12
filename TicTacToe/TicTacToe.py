@@ -6,7 +6,7 @@ import time
 
 #Hardcoded------------
 
-board = [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "]
+board = [" "] * 10
 
 #defenations---------------
 
@@ -23,17 +23,24 @@ def mainBoard():
     print(' ' + board[1] + ' | ' + board[2] + ' | ' + board[3])
     print('   |   |')
 
-def playMove():
-    referValue = int(input("Your move?: "))
-    board[referValue] = "X"
-
 def scRefresh():
     os.system("cls")
     mainBoard()
 
+def playMove():
+    referValue = int(input("Your move?: "))
+    if board[referValue] == " ":
+        board[referValue] = "X"
+    else:
+        print("that move is taken")
+        playMove()
+
 def aiMove():
     aiValue = random.randint(1,9)
-    board[aiValue] = "O"
+    if board[aiValue] == " ":
+        board[aiValue] = "O"
+    else:
+        aiMove()
 
 def playMoveDisplay():
     scRefresh()
@@ -58,7 +65,10 @@ def userPlayFirst():
         aiMoveDisplay()
         playMoveDisplay()
 
-#Execution
+def winPoss():
+    return(board[])
+
+#Execution----------------------
 
 while True:
     whoFirst = (input("who first?(B=Bot/P=Player) : "))
