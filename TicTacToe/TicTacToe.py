@@ -6,7 +6,7 @@ import time
 
 #Hardcoded------------
 
-board = [" "] * 10
+board = ["OMG THIS SHITTY BUG WASTED HOWERS TO ACTUALLY FIGURE OUT! STUPID THING!"," "," "," "," "," "," "," "," "," "]
 
 #defenations---------------
 
@@ -28,7 +28,7 @@ def scRefresh():
     mainBoard()
 
 def playMove():
-    referValue = int(input("Your move?: "))
+    referValue = moveInpValid("Your move: ")
     if board[referValue] == " ":
         board[referValue] = "X"
     else:
@@ -57,24 +57,101 @@ def aiPlayFirst():
     aiMoveDisplay()
     while True:
         playMoveDisplay()
+        checkGameWon()
         aiMoveDisplay()
+        checkGameWon()
 
 def userPlayFirst():
     playMoveDisplay()
     while True:
         aiMoveDisplay()
+        checkGameWon()
         playMoveDisplay()
+        checkGameWon()
+
+def moveInpValid(prompt):
+    while True:
+        try:
+            inpVal = int(input(prompt))
+        except ValueError:
+            print ("Please input integers only!")
+            continue
+        if not (inpVal >= 1 and inpVal <= 9):
+            print("the move can only be between 1-9")
+            continue
+        else:
+            break
+    return inpVal
 
 def winPoss():
-    return(board[])
+    return(board[" "])
 
-#Execution----------------------
+def playerWon():
+    return(
+        #horrizontal
+        (board[1] == "X" and board[2] == "X" and board[3] == "X" ) or
+        (board[4] == "X" and board[5] == "X" and board[6] == "X" ) or
+        (board[7] == "X" and board[8] == "X" and board[9] == "X" ) or
+        #vertical
+        (board[7] == "X" and board[4] == "X" and board[1] == "X") or
+        (board[8] == "X" and board[5] == "X" and board[2] == "X") or
+        (board[9] == "X" and board[6] == "X" and board[3] == "X") or
+        #diagnoa
+        (board[1] == "X" and board[5] == "X" and board[9] == "X") or
+        (board[7] == "X" and board[5] == "X" and board[3] == "X"))
 
-while True:
-    whoFirst = (input("who first?(B=Bot/P=Player) : "))
+def aiWon():
+    return (
+        # horrizontal
+        (board[1] == "O" and board[2] == "O" and board[3] == "O") or
+        (board[4] == "O" and board[5] == "O" and board[6] == "O") or
+        (board[7] == "O" and board[8] == "O" and board[9] == "O") or
+        # vertical
+        (board[7] == "O" and board[4] == "O" and board[1] == "O") or
+        (board[8] == "O" and board[5] == "O" and board[2] == "O") or
+        (board[9] == "O" and board[6] == "O" and board[3] == "O") or
+        # diagnoal
+        (board[1] == "O" and board[5] == "O" and board[9] == "O") or
+        (board[7] == "O" and board[5] == "O" and board[3] == "O"))
+
+def checkGameWon():
+    if playerWon():
+        print("YAY!YOU HAVE WON THE GAME")
+        exitSeq()
+    elif aiWon():
+        print("Oh no! you have lost the game")
+        exitSeq()
+    elif boardFull():
+        print("The Game is a Draw!")
+        exitSeq()
+    else:
+        return False
+
+def boardFull():
+    if " " in board:
+        return False
+    else:
+        return True
+
+def exitSeq():
+    exitQ = input("do you want to  Retry [R] or Exit [E]").upper()
+    if exitQ == "E":
+        exit()
+    elif exitQ == "R":
+        mainGame()
+    else:
+        exitSeq()
+
+def mainGame():
+    whoFirst = (input("who first?(B=Bot/P=Player) : ")).upper()
     if whoFirst == "B":
         aiPlayFirst()
     elif whoFirst == "P":
         userPlayFirst()
     else:
         print("please input a valid choice!")
+        mainGame()
+
+#Execution----------------------
+
+mainGame()
