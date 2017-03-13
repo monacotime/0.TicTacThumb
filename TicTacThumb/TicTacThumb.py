@@ -1,14 +1,14 @@
-#imports------------
+# imports------------
 
 import random
 import os
 import time
 
-#Hardcoded------------
+# Hardcoded------------
 
-board = ["OMG THIS SHITTY BUG WASTED HOWERS TO ACTUALLY FIGURE OUT! STUPID THING!"," "," "," "," "," "," "," "," "," "]
+board = ["OMG THIS SHITTY BUG WASTED HOWERS TO ACTUALLY FIGURE OUT! STUPID THING!", " ", " ", " ", " ", " ", " ", " ", " ", " "]
 
-#Fancy-----------------------------
+# Fancy-----------------------------
 
 def title():
     print(",---------. .-./`)     _______            ,---------.    ____        _______            ,---------. .---.  .---.   ___    _ ,---.    ,---. _______   ")
@@ -21,15 +21,23 @@ def title():
     print("    (_I_)    |   |  `-'`-'     /              (_I_)   \ (_ o _) / `-'`-'     /              (_I_)   (_{;}_)|   |  \ /  . \ /|  |      |  ||  (_,_)  /")
     print("    '---'    '---'    `._____.'               '---'    '.(_,_).'    `._____.'               '---'   '(_,_) '---'   ``-'`-'' '--'      '--'/_______.' ")
     print("                                                                                                                                                     ")
-    print("                               |_                              _   _  ____   _  _   ____   ___  ____ ")
-    print("                               |_)\/                          ) \_/ (/ __ \ ) \/ ( / __ \ / _( / __ \\")
-    print("                                  /                           |  _  |))__(( |  \ | ))__(( ))_  ))__((")
-    print("                                                              )_( )_(\____/ )_()_( \____/ \__( \____/")
+    print("                                                                   |_                              _   _  ____   _  _   ____   ___  ____ ")
+    print("                                                                   |_)\/                          ) \_/ (/ __ \ ) \/ ( / __ \ / _( / __ \\")
+    print("                                                                      /                           |  _  |))__(( |  \ | ))__(( ))_  ))__((")
+    print("                                                                                                  )_( )_(\____/ )_()_( \____/ \__( \____/")
 
 def rules():
-    print("they shall be added later :D")
+    print("===========================================================================================================================================================")
+    print("||                                                                                    Grid:                                                              ||")
+    print("||                                                                                      ||  7|8|9  ||                                                    ||")
+    print("||How to play TIC-TAC-THUMB?                                                            ||  -+-+-  ||                                                    ||")
+    print("||Its ez! All you have to do is just bring the game to a DRAW! :D                       ||  4|5|6  ||                                                    ||")
+    print("||Yep, you read that right! Unlike other similar looking games...                       ||  -+-+-  ||                                                    ||")
+    print("||you can claim yourself the victor only if you can bring the game to a DRAW ! XD       ||  1|2|3  ||                                                    ||")
+    print("===========================================================================================================================================================")
 
-#defenations---------------
+
+# definitions---------------
 
 def mainBoard():
     print('   |   |')
@@ -98,16 +106,17 @@ def moveInpValid(prompt):
             inpVal = int(input(prompt))
         except ValueError:
             print ("Please input integers only!")
+            time.sleep(0.5)
+            scRefresh()
             continue
         if not (inpVal >= 1 and inpVal <= 9):
             print("the move can only be between 1-9")
+            time.sleep(0.7)
+            scRefresh()
             continue
         else:
             break
     return inpVal
-
-def winPoss():
-    return(board[" "])
 
 def playerWon():
     return(
@@ -139,13 +148,13 @@ def aiWon():
 
 def checkGameWon():
     if playerWon():
-        print("YAY!YOU HAVE WON THE GAME")
+        print("OH NOH! You have won the game! ;=;")
         exitSeq()
     elif aiWon():
-        print("Oh no! you have lost the game")
+        print("OH NOOOO! You have lost to a bot with (IQ lvl < 0!)! >,<")
         exitSeq()
     elif boardFull():
-        print("The Game is a Draw!")
+        print("Amazin'! You have brought the game to a DRAW! YAYYY!!!~ xD")
         exitSeq()
     else:
         return False
@@ -157,26 +166,37 @@ def boardFull():
         return True
 
 def exitSeq():
-    exitQ = input("do you want to  Retry [R] or Exit [E]").upper()
+    exitQ = input("Do you want to  Retry [R] or Exit [E]: ").upper()
     if exitQ == "E":
         exit()
     elif exitQ == "R":
+        resetBoard()
         mainGame()
     else:
+        print("Please input a valid choice!")
+        time.sleep(0.5)
+        scRefresh()
         exitSeq()
+
+def resetBoard():
+    global board
+    del board[:]
+    board = [" "] * 10
 
 def mainGame():
     scRefresh()
-    whoFirst = (input("who first?(B=Bot/P=Player) : ")).upper()
+    whoFirst = (input("Who goes first?[B=Bot/P=Player] : ")).upper()
     if whoFirst == "B":
         aiPlayFirst()
     elif whoFirst == "P":
         userPlayFirst()
     else:
         print("please input a valid choice!")
+        time.sleep(0.5)
         mainGame()
 
 
 #Execution----------------------
 
+input("Please press [Alt + Enter] before we begin! *Important*")
 mainGame()
