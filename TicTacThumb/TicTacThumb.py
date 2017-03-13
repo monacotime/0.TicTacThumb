@@ -182,6 +182,7 @@ def resetBoard():
     global board
     del board[:]
     board = [" "] * 10
+    board[0] = "something other than nothing"
 
 def mainGame():
     scRefresh()
